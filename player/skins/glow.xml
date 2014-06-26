@@ -1,0 +1,173 @@
+<?xml version="1.0" ?><skin author="JW Player" name="Glow" target="6.7" version="3.0">
+
+	<components>
+
+		<component name="controlbar">
+			<settings>
+				<setting name="margin" value="0"/>
+				<setting name="maxwidth" value="9999"/>
+				<setting name="fontsize" value="11"/>
+				<setting name="fontweight" value="normal"/>
+				<setting name="fontcase" value="normal"/>
+				<setting name="fontcolor" value="0xffffff"/>
+			</settings>
+			
+			<elements>
+				<element name="background" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAeCAIAAACAK/jpAAAAFElEQVR42mMQFhFFQwyjQqNChIUA+vQqMcnMOFIAAAAASUVORK5CYII="/>
+				<element name="capLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAeCAIAAABv6ZPXAAAAFUlEQVR42mMQFhHFRAyjoqOiAyYKAHbRMTlMgS95AAAAAElFTkSuQmCC"/>
+				<element name="capRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAeCAIAAABv6ZPXAAAAFUlEQVR42mMQFhHFRAyjoqOiAyYKAHbRMTlMgS95AAAAAElFTkSuQmCC"/>
+				
+				<element name="playButton" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAeCAYAAAA2Lt7lAAAAX0lEQVR42u3VMQ7AMAhDUW7W3jy5Gc1SZYrAuAyVjOT1vxFzd+ucCRDwX2CsXZ3AezQUATSUBcoQCsBQFUhDLBBCXwFz7e4AjmEWCMNVIB1GATicBcrhCKDDejgCBOw9frHJp3LQ/k8AAAAASUVORK5CYII="/>
+				<element name="pauseButton" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAeCAYAAAA2Lt7lAAAALklEQVR42mP4//8/Ay0xw6gFoxYMbQvQAanyoxaMWjBqwagFoxaMVjijFowkCwA4udeZpI0/lgAAAABJRU5ErkJggg=="/>
+				<element name="prevButton" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAeCAYAAAAhDE4sAAAAUElEQVR42u3TOw4AIAhEQW6mN9ebPSsao8YPnVtsQkKYAoIBFhETJOgriMVQAsoL5ACj/g7UA8fQDDiGMlAjIK9n4PWye/D5/A7q1wQJ2k8Dffh13+ZD/1kAAAAASUVORK5CYII="/>
+				<element name="nextButton" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAeCAYAAAAhDE4sAAAATUlEQVR42u3TMQoAIAiFYW9WN6+bmYsNgpHa1hP+0Q8cJGamFxEgQN9AQ2qHJb6FdDwwDHlgGrJgGZpSr0AKpE+zQBjygDCEXwMEaLcA7Kd131/Jmm0AAAAASUVORK5CYII="/>
+				
+				<element name="elapsedBackground" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAeCAYAAAAPSW++AAAAFklEQVR42mP4//8/AzbMMCoxKjHcJAArFxoDYgoNvgAAAABJRU5ErkJggg=="/>
+				<element name="durationBackground" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAeCAYAAAAPSW++AAAAFklEQVR42mP4//8/AzbMMCoxKjHcJAArFxoDYgoNvgAAAABJRU5ErkJggg=="/>
+				<element name="timeSliderCapLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAeCAYAAADpYKT6AAAAFElEQVR42mP4//8/AwwzjHIGhgMAcFgNAkNCQTAAAAAASUVORK5CYII="/>
+				<element name="timeSliderCapRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAeCAYAAADpYKT6AAAAFElEQVR42mP4//8/AwwzjHIGhgMAcFgNAkNCQTAAAAAASUVORK5CYII="/>
+				<element name="timeSliderRail" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAYAAADtlXTHAAAAGUlEQVR42mP4//8/AwOZhKa27n/cBAUmAwDEJ1C5draFQAAAAABJRU5ErkJggg=="/>
+				<element name="timeSliderRailCapLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAeCAYAAADpYKT6AAAAMUlEQVR42mP4//8/AwwzDDKOprYuGxBPBOK3IM4EIP4PwiDOW5wcFGUwA94xDGKfAgDN+O42nvN9ewAAAABJRU5ErkJggg=="/>
+				<element name="timeSliderRailCapRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAeCAYAAADpYKT6AAAAK0lEQVR42mP8//8/AwwwDjKOprbuOyC9GIhLQRyYVCcy5x1OTheqAYPYpwCtlVXU7ljCuAAAAABJRU5ErkJggg=="/>
+				<element name="timeSliderBuffer" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAYAAADtlXTHAAAAGUlEQVR42mP4//8/AwOZhLWt43/cBAUmAwAnQlIJ0oWycwAAAABJRU5ErkJggg=="/>
+				<element name="timeSliderBufferCapLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAeCAYAAADpYKT6AAAAMUlEQVR42mP4//8/AwwzDDKOta0jGxBPBOK3IM4EIP4PwiDOW5wcFGUwA94xDGKfAgDPyfImKLYvhAAAAABJRU5ErkJggg=="/>
+				<element name="timeSliderBufferCapRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAeCAYAAADpYKT6AAAAK0lEQVR42mP8//8/AwwwDjKOta3jOyC9GIhLQRyYVCcy5x1OTheqAYPYpwCzcFckzaC7kQAAAABJRU5ErkJggg=="/>
+				<element name="timeSliderProgress" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeCAYAAADtlXTHAAAAFklEQVR42mP4//8/AwP5xH+8BLkmAwAp9l+hrQXDOAAAAABJRU5ErkJggg=="/>
+				<element name="timeSliderProgressCapLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAeCAYAAADpYKT6AAAALElEQVR42mP4//8/AwwzDD4OGxBPBOK3IM6E/1AA4rzFyUFRBjPgHcMg9ikA9sIa/eVBH7EAAAAASUVORK5CYII="/>
+				<element name="timeSliderProgressCapRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAAeCAYAAADpYKT6AAAAKElEQVR42mP4//8/AwwzDD7OOyCeCMRsIA4MdCBz3uLkdGIYMFh9CgADERrvo9y/tgAAAABJRU5ErkJggg=="/>
+				<element name="timeSliderCue" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAeCAYAAAAVdY8wAAAAOUlEQVR42mP4//8/AzGYYVThyFQoLCLqCcTPoNgTn0KQgv9Q/IxYhc/xKfQCKQDiJyD2aMyMKsSLAX5aYOyFZ5uGAAAAAElFTkSuQmCC"/>
+				
+				<element name="hdButtonOff" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAeCAYAAADQBxWhAAAAqElEQVR42mP4//8/A70xw6ilo5aOWjo0LbW2dfQE4mdA/J8CDNLvSYqllFoIt5gUS/9TC1NiKUhsC5S9BcqHiYMwKxDbA/Fdelk6B4jPALEpENtQ21KQgaFQmgGLY1YAMRMQ/6CmpTlAPBNKY7N0LRAzA/FPegXvFSB2AmJneiYkNiB2AOL71LSULlmGWoXDc1Is9QJpoNDCJyBzRmuZUUtHLR21lGgMAHQB3hIEg3+MAAAAAElFTkSuQmCC"/>
+				<element name="hdButton" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAeCAYAAADQBxWhAAAAoUlEQVR42mP4//8/A70xw6ilo5aOWjpkLfUE4mf/KQPPoOYQbSmlFiJbTLSl1ARkWwoS2wJlb0FSA1PPCsT2QHyXXpbOAeIzQGwKxDbUthRkYCiUZsDimBVAzATEP6hpaQ4Qz4TS2CxdC8TMQPyTXsF7BYidgNiZngmJDYgdgPg+NS2lS5ahVuHwnBRLvaAaKAFPoOaM1jKjlo5aOmopcRgAkmriwA8LLzsAAAAASUVORK5CYII="/>
+				<element name="ccButtonOff" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAeCAYAAADQBxWhAAAA5ElEQVR42u3VzQoBURiA4VkQxRVYyMI12EiZDVFk66qUpVwBJS6BnYW1ndTIkPK3IzneU1+apWlOU+osns3XzLzNOfPjKKWcuDk2aqM2+p/RcsVtYA8VgT6/ESYaNfgNh4kqU6JE9Z23kEYBI5lvUUcKRcxMRmtycQ8DiZxQQQc79JDBzUT0iSTmgdkZB+hjlzJ7y/xlIvpAAovAxcdYS3Ql85cs+8XU8rpow8dQlvGKEro4oo8s7qainuyrvuMcJjLfoCrzPKYmH6RYXhlTHwc/TLQp+xclqF+jpv3L2KiN2ujPPrcA5VjO77lIAAAAAElFTkSuQmCC"/>
+				<element name="ccButton" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAeCAYAAADQBxWhAAAA4ElEQVR42u3VzQoBURiA4VkQxRVYyMI12Ck2RJGtq1KWcgWUuAR2FtZ2UjPNkPK3o8l4p77FLIf5UuqcejZfM+fljB8rCALr1ywTNVET/dtoC26QbLmyT+xo0mA0HDuqub6Ohq+4gyxKmMh8jyYyKGOhGW3I5jZGEjmhih4cDJDDTSP6RBrLyOyMg1y7ltlL5r5G9IEUVpHNp9jKtRuZ+3LsF63jraMLD2M5xisq6OOIIfK4a0Vtea7hOy5gJvMdajIvYq75QfrJV0brx8H7JNqWG5IsR/Yx/zImaqImGs8b1WnqBkJN/DYAAAAASUVORK5CYII="/>
+				<element name="muteButton" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAeCAYAAAAy2w7YAAAA5UlEQVR42mP4//8/Az0ww6hFoxaNWkQIswOxPb0sOgzEZtSwiAuI56GJWQCxLpStAMTngJiZEot0gPjyfwhAFleBGs4N5U8A4kByLUoC4q//EQAk5gzEPFB2OhBXQdnGQLyAFIvwAZB8HBDPgLJ5gfgElM0I9SHVLALhi0jsMzjYFFvESC+LcoC4H8oWAOLjUDYTEJ8lNzEkYEkMJkDMBmWXAHEhlG0JxLMpSd4aOJI3KA+dgmZYBmgC8aQ0w3IC8Uw0MX1oXoI55jg0/mhWBHFDE4EBrcs6ULFjPlofjVo0ahFtMQCCt1oTYVTPJwAAAABJRU5ErkJggg=="/>
+				<element name="unmuteButton" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAeCAYAAAAy2w7YAAAAV0lEQVR42mP4//8/Az0ww6hFoxaNWjQ8LeIC4jm0tkgLiC//hwCaWZQAxF//IwBVLcIHRi0aHBYh43gg/kwPi0BYgx7JG4Y5gHjmaFk3atGoRaMWUQ8DABG0QyiN0Ek7AAAAAElFTkSuQmCC"/>
+				<element name="fullscreenButton" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAeCAYAAAAo5+5WAAAAdUlEQVR42u3UsQ3AIAwFURYIQzJKWI0hWCZcGhcWaVDyqWIk2idzIBKQduwUcMA/hDPQeC7JxBnoO+ACXGq4AMOw4Sb/DFeHFtdckqIa6psvw8d0/FP13JpN4ptWBYxdzJiaSmDeoqtwn5rLYFzz+N0CDlixb/VC4nzeovAxAAAAAElFTkSuQmCC"/>
+				<element name="normalscreenButton" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAeCAYAAAAo5+5WAAAAeElEQVR42u3UwQ2AIAyFYRawQzKKrOYQLCO/B2tCevD0TIy2CQmnD3gUClCeGCXhhN8NL9O8AqsK3gBzdHBWU8AAfUKHLyKBuUMVcA+Zy2CmzD/Yx+bHiyXZsfnFyOEK7Gq4hubvKriF5r8yl0TRwouy/I8T/iN8APCc4nzW0yWtAAAAAElFTkSuQmCC"/>
+				
+				<element name="volumeCapLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAeCAYAAAAGos/EAAAAE0lEQVR4XmP4//8/AwiDiZHOAADtSrNNTuJKUAAAAABJRU5ErkJggg=="/>
+				<element name="volumeCapRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAeCAYAAAAGos/EAAAAE0lEQVR4XmP4//8/AwiDiZHOAADtSrNNTuJKUAAAAABJRU5ErkJggg=="/>
+				<element name="volumeRail" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAeCAYAAABTwyyaAAAAPUlEQVR42u3TQREAIAwEMaqL4YF/UYeNlskqyGcryZpYgYODg4ODg4N3hu9zR8rBwb+fExwcHBwcHBy8cQ81blSxmeGJbAAAAABJRU5ErkJggg=="/>
+				<element name="volumeRailCapLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAeCAYAAAAGos/EAAAAJklEQVR42mP8//8/Awgw0pNhbevoCaTnghjPgAxJFIYXWGogHAYAWLhUgP5yt9oAAAAASUVORK5CYII="/>
+				<element name="volumeRailCapRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAeCAYAAAAGos/EAAAAKUlEQVR42mP4//8/Awgz0JNhbev4DIg9QYz/IA6M8RzEeALEXgwD4TAAjYWnVXUas/gAAAAASUVORK5CYII="/>
+				<element name="volumeProgress" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAeCAYAAABTwyyaAAAAN0lEQVR42u3TQREAAAjDMPAvetiAI1WQTztJXazBwcHBwcHBwZfDT8rBwT/MCQ4ODg4ODg6+tQGsCV3Bm5usFgAAAABJRU5ErkJggg=="/>
+				<element name="volumeProgressCapLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAeCAYAAAAGos/EAAAAI0lEQVR42mP8//8/Awgw0pnhCaTnghjPgAxJFIYXTIruDgMANzNdkBV5dyIAAAAASUVORK5CYII="/>
+				<element name="volumeProgressCapRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAeCAYAAAAGos/EAAAAJklEQVR42mP4//8/Awgz0JnxDIg9QQwQeAZjPAcxngCxF8NAOAwAJju5dbA7OqcAAAAASUVORK5CYII="/>
+				
+			</elements>
+		</component>
+
+		<component name="display">
+			<settings>
+				<setting name="bufferrotation" value="90"/>
+				<setting name="bufferinterval" value="90"/>&gt;
+				<setting name="fontcase" value="normal"/>
+				<setting name="fontcolor" value="0xffffff"/>
+				<setting name="fontsize" value="11"/>
+				<setting name="fontweight" value="normal"/>
+			</settings>
+			<elements>
+				<element name="background" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAA0CAYAAACQGfi1AAAAMklEQVR42u3NIQ0AAAgAMHoxBAHoX4cMCNzF9SOr51MIBAKBQCAQCAQCgUAgEAgEgosFUDv9fYxcsNgAAAAASUVORK5CYII="/>
+				<element name="backgroundOver" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAA0CAIAAAAfe2/iAAAALElEQVR42u3MMQ0AAAgDsPkiHPg3hQnC1aR3Uz0nIhKJRCKRSCQSiUQi0W+0CDSGDlxOk88AAAAASUVORK5CYII="/>
+				<element name="capLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAA0CAYAAACHO2h8AAAAU0lEQVR42u3XIRIAEBQGYZ3jaEbQCO5/Hb9gRvbejLJh69c3lNqCiiqroeZLG0mqvwI3lK3IgYYXNIGAgICAgICAgICAgD5AblPjtllu43cw04ouhpu8AfId1HMAAAAASUVORK5CYII="/>
+				<element name="capLeftOver" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAA0CAYAAACHO2h8AAAAXElEQVR42u3XsQ2AMAxEUS+DyA6IgoEzG3IWCJciErVjKc0vfvt07dl1P6YOVZWrHmkgp3qjwB+qq8iEPAvqQEBAQEBAQEBAQEBAG6C0U5N2s0rW8ZsvcixrUegDIjdCHXqqSb0AAAAASUVORK5CYII="/>
+				<element name="capRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAA0CAYAAACHO2h8AAAAUklEQVR42u3XoQ0AIAwAwXoYB0cQOCrYfx2KYAHaBMSLt+dfauvzMrWKlSwRB3QaVo6AdiUK0ihoAgEBAQEBAQEBAQEBPYD0q81yj99Z0bxXdAEOFrwB39DzVQAAAABJRU5ErkJggg=="/>
+				<element name="capRightOver" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAA0CAYAAACHO2h8AAAAWElEQVR42u3XsQ3AIAwAQS+DYAdEkYGZDREGILaULACWQvHFt9e/5HLNxbpWtaCJbEBfTYsekFW9oOEFTSAgICAgICAgICAgoB+gcdRm2filHeh+VzTaij7/gEIh77+KLAAAAABJRU5ErkJggg=="/>
+
+				<element name="bufferIcon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAYCAYAAACSuF9OAAABI0lEQVR42s2XTwqCQByFXdiidTUkHSQwsgMUQeZJMrHa6UVynaA0HtB+wgvEJGWckVl8IJjPz/ljT6MsS0OABeERMfEkMsGcH0REAuJNFA1GF1oTL9w8J0LCIRhhji10JDhkHoQlS0BEaAuZaprOqkT6ClVrJsXIKJfpI3SFzG0MmS4hhqmqFvBcByEPo+OPJdMlFEFoo4tQAiGmi1AGoYluQlOJNzRrb3rhKVtJFGLITESEYgWL2kZmpMu2vyDT0+HFOMO65P92bldIgCcKJQiFyApk/bm6A2RcZKTIHFQ/nFr9OAjI7HEtR5b0gnbvWdAstIQC155UV1gf2/hbYU0c2ziX16Zpp7rk85aS34TjtwuVXx1tn0EJRiPHcYxzS5HsDz+DXwaD5p6aAAAAAElFTkSuQmCC"/>
+				<element name="bufferIconOver" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAYCAYAAACSuF9OAAABLklEQVR42s2XywqCQBSG21SrnqBQiehx2hR0eYWCFlH2PlnShdb5PPkEuanIpjPwB4KRcpyREb6Nl9/PmeN4rAghKgwsYk0ExJW4M3NScER2xEukt9KFesQNN38Qe2JMOEStbKE5EUPmTHRUCXCEhsQb07TSJZJXSNZMhJHRLpNHaAuZYxkyWUI26kYWcMsEIRej45UlkyV0gdDAFKEQQrYpQncI1U0Taii8YS2x0rOnrKtQyEZmyBEKNBR1H5kXU177DTJdjpCjeGFsoi5jZLM+HT6e6KBA6IAsX9XHdVlAZomMCJmF2o9Rov2YMWSmuPaNLOUN2ilng9ZBlyAgs9Ddwnp4jWWBVoGDfR7O+U7TRGeT7ydG698W41xL51/Hr98gueo+QYh98libk/0Bu5d90pG8kscAAAAASUVORK5CYII="/>
+				<element name="errorIcon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAYCAYAAACSuF9OAAABBElEQVR42sWVuw2DMBBAiZQ06dKmT6LQMwETMAJMwASZgAFCS0dDpHhAcpYOySJn4/MHF09CxsZPMvCyeZ6zABSI97NCyByBN9DjdXKhChBIlVroAoyK0IhjyYRaRWahTSV0A76EkBx77C10ADpCZqHDObsJlSuBHFHHyr2EzsCw2ny5p44NODe6UE0cESUkaWILXYGJITThmmhCL81LrBMSuCaKUGH4qkxCgtM5Tq96DyG59hRSqDJsZiNk3TmXXrkKWXXOtVeC+DE+Lea1vkJ3Ta9c2eycT69cMXaO06utI8sZ80uuENWrEO/QZud0Qk2Eo7LqHKdXoflQneP0KgZ/nfsBkGDx5kGXMvIAAAAASUVORK5CYII="/>
+				<element name="errorIconOver" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAYCAYAAACSuF9OAAABA0lEQVR42s3VvRGCMACGYSzUztoFHMGfO9nAIRiCLZQhGMIdmEEWoKbDhtcmnhwk5IcE/O7SQALPXQJfBEQexk2Myc/ygVkDL6AENv8ASvklXRq0B+oOqBbXFgPlDJMvBToCrQTUAue5QSugQJ1CzJkNlPQAsRjdJHOBdkDVe/n3XjeVmBscdJdskQwEkIUGHYDGAtSINcFAT8UhVoEQa4KAbiNf1RgIm56z6atyAqgEtj5BKePRgYx7zqWvXEFGPefaV0h+jFeDeflU0EnRV65pgYsrSNdXrhntOZu+0m1ZbDE/sQXJ+srHGdL2nAr0IHwyU5Cqr3znLes5m74KkUHPfQDHFE8eB7LNsAAAAABJRU5ErkJggg=="/>
+				<element name="playIcon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAYCAYAAACSuF9OAAAAf0lEQVR42s3OuRWAQAwD0S0I2oSCKNC7AYT4+ZAEwUST/GFm46VjtTmfkjevOyksApLCMiAJrAKiwjogCgwBgsKQIAiMAWrBmKASTAFKwZSgEOwL0Lna/wByIUpQCKIApSBMUAnCALUgSBAEggBBIR0QBVIBUSEZkAQSAUkhTxPl/9/XKcFA0AAAAABJRU5ErkJggg=="/>
+				<element name="playIconOver" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAYCAYAAACSuF9OAAAAfUlEQVR42s3OuQ3AMAxDUW+WbB5vprhxaUEHyYTAr9i8YWbj0LO6nJ+Sd+5JYRGQFJYBSWAVEBXWAVFgCBAUhgRBYAxQC8YElWAKUAqmBIVgX4Dm6v4DyIUoQSGIApSCMEElCAPUgiBBEAgCBIV0QBRIBUSFZEASSAQkhexe/7U1ZhVTfkwAAAAASUVORK5CYII="/>
+				<element name="replayIcon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAA0CAYAAADi1poDAAABrUlEQVR42u2YMUvDQBiGWwhiEBchoUEHccnk5OCkUlDiJIhZHPUHiKDZTYr4AwS7adxExWL8gfENfIGPkDTJ3aUGvOGhpU3ePM2Xu/uugzRNB31ioIW0kBbSQlpIC/2dUAi2+iT0AxJwA6y+COXMwCVY7YtQzhs4A0tdC2Ul8UEEXsBXhVDOMzgEQ9VCmUgAvmsEqrhQKbQL3gVFHsGOypKd0AjiF7kHx8ABRoXIKzhqUqo2QnsFmSnYrnmoP8A5WFY9yiwKzy/0AMyaeegKrM3JHMoI3RbuzMqcY+/AZs2Pu6ZMISGblSp7dSXmqOyOfbIsW0TIZ3dnomDinLA8X0QoZAGeAiGP5YUiQjELcBQIOSwvFhHiy4GhQMgoLL5SQmYfhHjJ1hUIjWRLFrGAsQKhsexD7TcJaEEkO+xVToxuIcsWXTqCFktHFdk5TywnWNTiWoZJ5/AuwJJtP/ZL2g+3YZmm7LyEsjpp0BJ6SD0azgb1Phv0WVRy/KnqJl+0hc3KdNDVriNv8pMGIgkday1iX8a3QTEtBTN6H9F3I/1ngxbSQlpIC2mh/yj0C6hEdWpzaX7yAAAAAElFTkSuQmCC"/>
+				<element name="replayIconOver" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAA0CAYAAADi1poDAAABu0lEQVR42u2Yv0oDQRCHQ8CAaEhhlWYjRtDGwi6lpZWtIqRQiK2FYNLZi68gWKh5BHMEwVewMbV42AoGQcW7z2YDQ8ify+4mHrgD0yy3v/tuZ3Zn9jJAJk2e8UAeyAN5IA/kgf4OqAVspgkIIAKuAZUWoJ59ARfAUlqAevYGnALz0wZSQAMIgBfgk9H2DBwAWddACrgFfjCzc5dAO8C7IcgjsO0yZMd6B0m7B46AVSA3BOQVOEwSqkmAdoFYvKQDbI1J6i5wBiy63mVKi/fsAciPOYcugeIIzawN0E3fyhRGPHsHbIz5uCutaQRUEnkTAxWLM6oIfIhVLJkA1cXqtB0cnG2hVzcBagmBmgOgmtBrmQCFQqDsAKgs9EITIFkOcg6Acn3F1woonwYgGbI1B0ArtiELhEDVAVDVNqnrSQQm8MB22y87PBgroh5GWtuodDQnKB3DvAA8CZ3mrIrrIM/rObILULbtx96A9qOSMEwdMS/WWlNp0GKdpDW9neeABWBdjwV9HxEDJ66bfNMWtgvsT+vWoXRSRglAIv2sYgb3MnkNCoFv7aEea+hQ+p8NHsgDeSAP5IH+HdAvgui2z2Ca1MoAAAAASUVORK5CYII="/>
+			</elements>
+		</component>
+
+		<component name="dock">
+			<settings>
+				<setting name="iconalpha" value="1"/>
+				<setting name="iconalphaactive" value="1"/>
+				<setting name="iconalphaover" value="1"/>
+			</settings>
+			<elements>
+				<element name="button" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAgCAYAAABpRpp6AAAAbUlEQVR42u3YIQ7AIBBE0fHlOLimoq4I7n+d7jZgmuB3yRffPzFqdF63rMOqVrN6sNqwuVGOLdYTEPrPjUVD35NUFXQGy3koEfYLMGDAgAEDBgwYMGDAgAEDBrwVON2Rku6qSncGTnT0u9WNegFZX50SPVmV5wAAAABJRU5ErkJggg=="/>
+				<element name="buttonOver" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAgCAYAAABpRpp6AAAAdUlEQVR42u3YsQ2AMAxE0VsGJTsgCgbObCgwQLCRKyT6GP3i90+Wq9O67bIWq1ndGpPVw+ZGObZYx4TQd24sCv1IUtOkb/DVpUTYJ8CAAQMGDBgwYMCAAQMGDBjwr8DphpR0U1VNNAZWxdxa4tLnhNAzbG7UDUlqZpDL9okXAAAAAElFTkSuQmCC"/>
+				<element name="buttonActive" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAgCAYAAABpRpp6AAAAdklEQVR42u3YMQqAMAxG4VympBcQwTv3bNJ6gJhKJsG9kTe8/SNk+sXMZNuP4jWve7ZYPWxlWidWvXNB6LtpVAm9JanJom/w1SWJsE+AAQMGDBgwYMCAAQMGDBgw4F+B0w0p6aaqmmgMrBJzq8alx4LQETad1htjeQdsasXADQAAAABJRU5ErkJggg=="/>
+				<element name="divider" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAgCAYAAAA1zNleAAAAFUlEQVR42mP4//8/AzJmGBUYFUBgAEE5fpDLFJZbAAAAAElFTkSuQmCC"/>
+			</elements>
+		</component>
+
+		<component name="playlist">
+			<settings>
+				<setting name="backgroundcolor" value="0x3b3d41"/>
+				<setting name="fontcolor" value="0x7c8087"/>
+				<setting name="fontsize" value="11"/>
+				<setting name="fontweight" value="normal"/>
+				<setting name="activecolor" value="0xb6bcc6"/>
+				<setting name="overcolor" value="0xb6bcc6"/>
+
+				<setting name="titlecolor" value="0xb6bcc6"/>
+				<setting name="titlesize" value="12"/>
+				<setting name="titleweight" value="bold"/>
+				<setting name="titleactivecolor" value="0xffffff"/>
+				<setting name="titleovercolor" value="0xffffff"/>
+			</settings>
+			
+			<elements>
+				<element name="item" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABMCAIAAACnG28HAAAAoklEQVR42u3SMQ0AAAjAMIItwoF/U5iAr80kLKtHOi8DHhgLY2EsjAXGwlgYC4yFsTAWGAtjYSwwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY/FvARqGkSGt3xaqAAAAAElFTkSuQmCC"/>
+				<element name="itemActive" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABMCAIAAACnG28HAAAAoUlEQVR42u3SQQkAAAgAMbGNiP3rWUJ/Gxfhsnqk8zLggbEwFsbCWGAsjIWxwFgYC2OBsTAWxgJjYSyMBcbCWBgLjIWxMBYYC2NhLDAWxsJYYCyMhbHAWBgLY4GxMBbGAmNhLIwFxsJYGAuMhbEwFhgLY2EsMBbGwlhgLIyFscBYGAtjgbEwFsYCY2EsjAXGwlgYC4yFsTAWGAtjYSwwFv8Wu3NlYV+B18sAAAAASUVORK5CYII="/>
+				<element name="itemImage" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGAAAAA2CAIAAAC3LQuFAAACKUlEQVR42u3Z+1KCQBQG8N5BUxAkRa6CInITsbT3f6k+Wd2IrD9qpsvsN3NqFrTRfrOXcw53g+E945O4w0/z+My4GQQiEIEIRCACEYhABGIQiEAEIhCBvhfRajMxTAJ9GPrERKgOFMWJphsTY5puy+79NCvxVR3XVxpovclkK2801urmKF+aL1zcxBuUBjJMq9vu3KSFuL/bPw3vx4PhCAOFgPwgwkTxw0hcFtW+1w9eJal4aRmtcWlMLYVOMckBI7GU4PURELYkXHr+UiEg1wskBDbg9pAybgJt8+qy4raFQkCaPpEQ62SbFbv3j1wEkO147UQb7w8nVYDysj6fU5qOX2eIdYrlcxOobp5wnmFsPcyVyKSn1iwr6mAZ43NdLwQSBufc57q+BJkEWsaJGONPlAAaa7rjBab1gM/FshKzw25zHBFOZ28CkGFOxRhvVgIIKwVGyGhE0dBbU8iDouuUQchzDUmjKsWq64eXf75Nf3pAKEe7QG1yeB7M7IUqQJs0FxtNuWt6QJgm+8MxbHPCPlycqAKEo3puu2G0kt9AhsgDxf7di7JqFO0HyTML86eqH28CobhXt2Emq1MvuJQRGPSAfrjF8beAkjTHoWbNbNnZeJ8x/nyF8acbZvKY6+zcJwK9huMGXaCF47Fp/yZ6mzRKeQK9iSx/Let/pUD9B081gjDG1oN6raoPBOKDQwIRiEC0IBCBCEQgAhGIQARiEOgLQIxP4gVyuacCT/sfygAAAABJRU5ErkJggg=="/>
+				<element name="divider" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANIAAAABCAIAAAAkUWeUAAAAEUlEQVR42mPS1NYdRaOIzggAdgpp1W64aMAAAAAASUVORK5CYII="/>
+				<element name="sliderRail" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAECAYAAACUY/8YAAAAHElEQVR42mP4//8/AzFYWET0PzImVh/DqAWEMACD4ALQZetwugAAAABJRU5ErkJggg=="/>
+				<element name="sliderRailCapTop" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAECAYAAACUY/8YAAAALElEQVR42mP4//8/AzFYWETUE4ifQbEnsfoYSLAAZPB/KH5GCwv+I+NBYwEAMhQBAIhkPZoAAAAASUVORK5CYII="/>
+				<element name="sliderRailCapBottom" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAECAYAAACUY/8YAAAALElEQVR42mP4//8/AzFYWET0PzImVh/DYLLgGZIFz2lhgRfIYCB+AmITqw8AHH0BAuhcp6wAAAAASUVORK5CYII="/>
+				<element name="sliderCapTop" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAKCAYAAACuaZ5oAAAAGUlEQVR42mP4//8/Ay0xw6gFoxaMWkB7CwB2As1P8WmmAwAAAABJRU5ErkJggg=="/>
+				<element name="sliderCapBottom" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAKCAYAAACuaZ5oAAAAGUlEQVR42mP4//8/Ay0xw6gFoxaMWkB7CwB2As1P8WmmAwAAAABJRU5ErkJggg=="/>
+				<element name="sliderThumb" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAGCAYAAADZq14TAAAAGUlEQVR42mP4//8/A5EYHRClj2HUguFvAQAlhcZI009l/AAAAABJRU5ErkJggg=="/>
+				<element name="sliderThumbCapTop" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAECAYAAACUY/8YAAAALUlEQVR42mP4//8/AzE4PDzi/4sXL8AYxCZWHwOxCkEGwwCUTV0L/mOCwWEBAI1dKd63h0DXAAAAAElFTkSuQmCC"/>
+				<element name="sliderThumbCapBottom" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAECAYAAACUY/8YAAAAMElEQVR42mP4//8/A5EYHRClj2HQWPDixQu4yS9fvqS+BeERkWCDnz179h/EJlYfANg/KeIRR/6TAAAAAElFTkSuQmCC"/>
+			</elements>
+		</component>
+
+		<component name="tooltip">
+			<settings>
+				<setting name="fontcase" value="normal"/>
+				<setting name="fontcolor" value="0xb6bcc6v"/>
+				<setting name="fontsize" value="11"/>
+				<setting name="fontweight" value="normal"/>
+				<setting name="activecolor" value="0xffffff"/>
+				<setting name="overcolor" value="0xffffff"/>
+			</settings>
+			
+			<elements>
+				<element name="background" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAACCAYAAABsfz2XAAAAEklEQVR42mOwtnV8RgpmIFUDAFr3JukT6L+UAAAAAElFTkSuQmCC"/>
+				<element name="arrow" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAECAYAAAC6Jt6KAAAAE0lEQVR42mP4//8/AymYYfBpAAA0lY9x7cu+jwAAAABJRU5ErkJggg=="/>
+				<element name="capTop" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAECAYAAAC6Jt6KAAAAEklEQVR42mOwtnV8RgpmGHwaAJufTdEdAsFJAAAAAElFTkSuQmCC"/>
+				<element name="capBottom" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAECAYAAAC6Jt6KAAAAEklEQVR42mOwtnV8RgpmGHwaAJufTdEdAsFJAAAAAElFTkSuQmCC"/>
+				<element name="capLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAACCAYAAABllJ3tAAAAEklEQVR42mOytnV8hg8zMRAAAHsGDP09pD0kAAAAAElFTkSuQmCC"/>
+				<element name="capRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAACCAYAAABllJ3tAAAAEklEQVR42mOytnV8hg8zMRAAAHsGDP09pD0kAAAAAElFTkSuQmCC"/>
+				<element name="capTopLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAK0lEQVR42mOwtnVkAGJFIJ4DxDeB+BkyBkkqA/ENdAlkBXNwScIU3MSnAADk3TC3Dc6ybwAAAABJRU5ErkJggg=="/>
+				<element name="capTopRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAKElEQVR42mOwtnV8hoZvAvEcIFYEYgYGLApg+AYQK+NTAMJzCCm4DQAxFjC5zqvTBQAAAABJRU5ErkJggg=="/>
+				<element name="capBottomLeft" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAJUlEQVR42mOwtnW8CcTPcGEGIDGHkAIVIL6BTwEIK0NNuoWuAAC4kzC7N5hO3wAAAABJRU5ErkJggg=="/>
+				<element name="capBottomRight" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAYAAACzzX7wAAAAJElEQVR42mOwtnV8hgffZiCgYA4+BTeAWAWbglsgnUCsDMQMAAVKML2ZfSTOAAAAAElFTkSuQmCC"/>
+
+				<element name="menuOption" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAQCAYAAAArij59AAAANklEQVR42mP4//8/Az7MMCQUCIuIegLxMyj2xKYAJPEfip8RUvAcmwIvkAQQPwGxh2ZAEVIAAGeyXtLXMjloAAAAAElFTkSuQmCC"/>
+				<element name="menuOptionOver" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAQCAYAAAArij59AAAAMElEQVR42mP4//8/Az7MMFQUeALxMyj2xKYAJAEDzwgpeI5NgRdU4gmUPTQDCi8GAFGbiuK0eN4/AAAAAElFTkSuQmCC"/>
+				<element name="menuOptionActive" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAQCAYAAAArij59AAAAMElEQVR42mP4//8/Az7MMFQUeALxMyj2xKYAJAEDzwgpeI5NgRdU4gmUPTQDCi8GAFGbiuK0eN4/AAAAAElFTkSuQmCC"/>
+
+				<element name="volumeCapTop" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAFCAYAAABB9hwOAAAAFUlEQVR42mP4//8/Ay0ww6jBNDcYAGkJSMbVbIZ4AAAAAElFTkSuQmCC"/>
+				<element name="volumeCapBottom" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAFCAYAAABB9hwOAAAAFUlEQVR42mP4//8/Ay0ww6jBNDcYAGkJSMbVbIZ4AAAAAElFTkSuQmCC"/>
+				<element name="volumeRail" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAA2CAIAAABr1H+yAAAAF0lEQVR42mMQFhFFQwyjQqNCo0IjRQgANlJL8QcuRVUAAAAASUVORK5CYII="/>
+				<element name="volumeRailCapTop" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAYAAACwAX77AAAAJklEQVR42mMQFhFlA+KJQPwWiN9B2WwMQGICEP9Hwx0MUJXoEm8BUQoSLClaAnUAAAAASUVORK5CYII="/>
+				<element name="volumeRailCapBottom" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAYAAACwAX77AAAAJUlEQVR42mMQFhF9C8T/0fBbBiAxAYtEJ0iCDYgnAvE7KAax2QDdOxIuagQMFgAAAABJRU5ErkJggg=="/>
+				<element name="volumeProgress" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAA2CAIAAABr1H+yAAAAFUlEQVR42mP4jwEYRoVGhUaFRooQAKXiyGLiR8YOAAAAAElFTkSuQmCC"/>
+				<element name="volumeProgressCapTop" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAYAAACwAX77AAAAJUlEQVR42mP4//8/GxBPBOK3QPwOymZjABIT/mOCDgaoSnTwFgCtQ0O+gNMS4gAAAABJRU5ErkJggg=="/>
+				<element name="volumeProgressCapBottom" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAADCAYAAACwAX77AAAAJElEQVR42mP4////2/+Y4C0DkJiARaITJMEGxBOB+B0Ug9hsADmDQ8DZE2xXAAAAAElFTkSuQmCC"/>
+			</elements>
+		</component>
+
+  </components>
+</skin>
