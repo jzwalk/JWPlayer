@@ -5,7 +5,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  * 
  * @package JWPlayer
  * @author 羽中
- * @version 1.0.4
+ * @version 1.0.5
  * @dependence 13.12.12-*
  * @link http://www.jzwalk.com
  */
@@ -21,8 +21,10 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 	 */
 	public static function activate()
 	{
-		Typecho_Plugin::factory('Widget_Abstract_Contents')->contentEx = array('JWPlayer_Plugin','parse');
-		Typecho_Plugin::factory('Widget_Abstract_Contents')->excerptEx = array('JWPlayer_Plugin','parse');
+		Typecho_Plugin::factory('Widget_Abstract_Contents')->filter = array('JWPlayer_Plugin','jwfilter');
+		Typecho_Plugin::factory('Widget_Abstract_Contents')->contentEx = array('JWPlayer_Plugin','jwparse');
+		Typecho_Plugin::factory('Widget_Abstract_Contents')->excerptEx = array('JWPlayer_Plugin','jwparse');
+		Typecho_Plugin::factory('Widget_Archive')->header = array('JWPlayer_Plugin','jwjs');
 	}
 	
 	/**
@@ -48,7 +50,7 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 <div style="color:#999;font-size:0.92857em;font-weight:bold;"><p>
 '._t('编辑文章或页面写入如%s文件地址%s发布即可. ','<span style="color:#467B96;">&lt;jw&gt;</span><span style="color:#E47E00;">','</span><span style="color:#467B96;">&lt;/jw&gt;</span>').'
 '._t('多个文件地址可用%s号隔开. ','<span style="color:#467B96;">,</span>').'<br/>
-'._t('末尾可继续附带下表参数,用%s号隔开. 参数内对应多个文件设置也用%s号隔开. 例:','<span style="color:#467B96;">|</span>','<span style="color:#467B96;">,</span>').'</p>
+'._t('末尾可继续附带下表参数, 用%s号隔开. 参数内对应多个文件设置也用%s号隔开. 例:','<span style="color:#467B96;">|</span>','<span style="color:#467B96;">,</span>').'</p>
 <p><span style="color:#467B96;">&lt;jw&gt;</span><span style="color:#E47E00;">http://1.flv</span><span style="color:#467B96;">,</span><span style="color:#E47E00;">http://2.mp4</span><br/>
 <span style="color:#467B96;">|</span><span style="color:#E47E00;">image=http://cover1.jpg<span style="color:#467B96;">,</span>http://ss2.jpg</span><br/>
 <span style="color:#467B96;">|</span><span style="color:#E47E00;">title='._t('动物滑稽视频').'<span style="color:#467B96;">,</span>Thor2 Trailer</span><br/>
@@ -210,32 +212,48 @@ text-align:center;
 	public static function personalConfig(Typecho_Widget_Helper_Form $form) {}
 
 	/**
-	 * 标签链接替换
+	 * 头部js方法挂载
+	 * 
+	 * @return void
+	 */
+	public static function jwjs()
+	{
+		$url = Helper::options()->pluginUrl.'/JWPlayer/player/';
+		echo '<script type="text/javascript" src="'.$url.'jwplayer.js"></script>';
+	}
+
+	/**
+	 * MD兼容性过滤
+	 * 
+	 * @param array $value
+	 * @return array
+	 */
+	public static function jwfilter($value)
+	{
+		//避免自动链接
+		if ($value['isMarkdown']) {
+			$value['text'] = preg_replace('/(?!<div>)<(jw)>(.*?)<\/\\1>(?!<\/div>)/is','<div><jw>\\2</jw></div>',$value['text']);
+			//兼容AudioPlayer
+			$value['text'] = preg_replace('/(?!<div>)\[(mp3)](.*?)\[\/\\1](?!<\/div>)/is','<div>[mp3]\\2[/mp3]</div>',$value['text']);
+		}
+		return $value;
+	}
+
+	/**
+	 * 内容标签替换
 	 * 
 	 * @param string $content
 	 * @return string
 	 */
-	public static function parse($content,$widget,$lastResult)
+	public static function jwparse($content,$widget,$lastResult)
 	{
 		$content = empty($lastResult) ? $content : $lastResult;
-		$url = Helper::options()->pluginUrl.'/JWPlayer/player/';
-		$js = (preg_match('/<(jw)>/i',$content)) ? '<script type="text/javascript" src="'.$url.'jwplayer.js"></script>' : '';
 
 		if ($widget instanceof Widget_Archive) {
-			//兼容markdown
-			if ($widget->isMarkdown) {
-				$text = str_replace(array('<jw>','</jw>'),array('<div><jw>','</jw></div>'),$widget->text);
-				$content = MarkdownExtraExtended::defaultTransform($text);
-				//兼容手动摘要
-				if ($widget->is('index')||$widget->is('archive')) {
-					$contents = explode('<!--more-->',$text);
-					list($content) = $contents;
-				}
-			}
 			$content = preg_replace_callback('/<(jw)>(.*?)<\/\\1>/si',array('JWPlayer_Plugin','callback'),$content);
 		}
 
-		return $js.$content;
+		return $content;
 	}
 
 	/**
