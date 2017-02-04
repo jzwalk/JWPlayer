@@ -1,17 +1,24 @@
 <?php
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 /**
- * 嵌入HTML5+Flash视频播放器JW Player6
+ * 为博客添加HTML5影音播放器JW Player
  * 
  * @package JWPlayer
  * @author 羽中
- * @version 1.0.5
- * @dependence 13.12.12-*
- * @link http://www.jzwalk.com
+ * @version 1.0.6
+ * @dependence 14.10.10
+ * @link http://www.yzmb.me/archives/net/jwplayer-for-typecho
  */
 class JWPlayer_Plugin implements Typecho_Plugin_Interface
 {
-	protected static $id = 0;
+	/**
+	* 初始播放器ID
+	* 
+	* @access private
+	* @var integer
+	*/
+	private static $id = 0;
+
 	/**
 	 * 激活插件方法,如果激活失败,直接抛出异常
 	 * 
@@ -21,12 +28,11 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 	 */
 	public static function activate()
 	{
-		Typecho_Plugin::factory('Widget_Abstract_Contents')->filter = array('JWPlayer_Plugin','jwfilter');
 		Typecho_Plugin::factory('Widget_Abstract_Contents')->contentEx = array('JWPlayer_Plugin','jwparse');
 		Typecho_Plugin::factory('Widget_Abstract_Contents')->excerptEx = array('JWPlayer_Plugin','jwparse');
-		Typecho_Plugin::factory('Widget_Archive')->header = array('JWPlayer_Plugin','jwjs');
+		Typecho_Plugin::factory('Widget_Abstract_Contents')->excerpt = array('JWPlayer_Plugin','txtparse');
 	}
-	
+
 	/**
 	 * 禁用插件方法,如果禁用失败,直接抛出异常
 	 * 
@@ -35,8 +41,8 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 	 * @return void
 	 * @throws Typecho_Plugin_Exception
 	 */
-	public static function deactivate() {}
-	
+	public static function deactivate(){}
+
 	/**
 	 * 获取插件配置面板
 	 * 
@@ -47,161 +53,79 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 	public static function config(Typecho_Widget_Helper_Form $form)
 	{
 		echo '
-<div style="color:#999;font-size:0.92857em;font-weight:bold;"><p>
-'._t('编辑文章或页面写入如%s文件地址%s发布即可. ','<span style="color:#467B96;">&lt;jw&gt;</span><span style="color:#E47E00;">','</span><span style="color:#467B96;">&lt;/jw&gt;</span>').'
-'._t('多个文件地址可用%s号隔开. ','<span style="color:#467B96;">,</span>').'<br/>
-'._t('末尾可继续附带下表参数, 用%s号隔开. 参数内对应多个文件设置也用%s号隔开. 例:','<span style="color:#467B96;">|</span>','<span style="color:#467B96;">,</span>').'</p>
-<p><span style="color:#467B96;">&lt;jw&gt;</span><span style="color:#E47E00;">http://1.flv</span><span style="color:#467B96;">,</span><span style="color:#E47E00;">http://2.mp4</span><br/>
-<span style="color:#467B96;">|</span><span style="color:#E47E00;">image=http://cover1.jpg<span style="color:#467B96;">,</span>http://ss2.jpg</span><br/>
-<span style="color:#467B96;">|</span><span style="color:#E47E00;">title='._t('动物滑稽视频').'<span style="color:#467B96;">,</span>Thor2 Trailer</span><br/>
-<span style="color:#467B96;">|</span><span style="color:#E47E00;">description='._t('我收藏的萌宠爆笑瞬间合辑').'<span style="color:#467B96;">,</span>Thor:The Dark World(2013) very cool!</span><br/>
-<span style="color:#467B96;">|</span><span style="color:#E47E00;">listbar=right</span><span style="color:#467B96;">|</span><span style="color:#E47E00;">autostart=true</span><span style="color:#467B96;">&lt;/jw&gt;</span>
-</p></div>
-<style type="text/css">
-table {
-background:#FFF;
-color:#666;
-width:490px;
-font-size:0.92857em;
-border:2px solid #F0F0EC;
-}
-table td{
-border-top:1px solid #F0F0EC;
-padding:3px;
-}
-.param {
-color:#E47E00;
-font-weight:bold;
-text-align:center;
-}
-.value {
-color:#467B96;
-font-weight:bold;
-text-align:center;
-}
-</style>
-<table>
-<colgroup>
-<col width="10%"/>
-<col width="10%"/>
-<col width="80%"/>
-</colgroup>
-<thead>
-<tr>
-<th>'._t('参数').'</th>
-<th>'._t('默认').'</th>
-<th>'._t('说明').'</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="param">image</td>
-<td class="value">-</td>
-<td>'._t('预览/封面图片, url地址. 播放音频将全程显示. ').'</td>
-</tr>
-<tr>
-<td class="param">title</td>
-<td class="value">-</td>
-<td>'._t('标题文字, 可显示在播放按钮或播放列表中. ').'</td>
-</tr>
-<tr>
-<td class="param">description</td>
-<td class="value">-</td>
-<td>'._t('描述文字, 可显示在完整条目的播放列表中. ').'</td>
-</tr>
-<tr>
-<td class="param">tracks</td>
-<td class="value">-</td>
-<td>'._t('字幕文件, url地址. %s号分隔中英,支持WebVTT/SRT/DFXP. ','<span style="color:#467B96;font-weight:bold">;</span>').'</td>
-</tr>
-<tr>
-<td class="param">width</td>
-<td class="value">480</td>
-<td>'._t('宽度, 整数或百分数. 如100%可配合宽高比参数自适应屏幕. ').'</td>
-</tr>
-<tr>
-<td class="param">height</td>
-<td class="value">270</td>
-<td>'._t('高度, 整数. 如40为播放音频的合适高度. ').'</td>
-</tr>
-<tr>
-<td class="param">aspectratio</td>
-<td class="value">-</td>
-<td>'._t('宽高比, 如%s. 与width参数同时指定时height参数无效. ','<span style="color:#467B96;font-weight:bold">16:9</span>').'</td>
-</tr>
-<tr>
-<td class="param">listbar</td>
-<td class="value">-</td>
-<td>'._t('播放列表, 只能为%s(底部)或%s(右侧)显示. ','<span style="color:#467B96;font-weight:bold">bottom</span>','<span style="color:#467B96;font-weight:bold">right</span>').'</td>
-</tr>
-<tr>
-<td class="param">autostart</td>
-<td class="value">false</td>
-<td>'._t('自动播放, 为%s时开启. 对移动端(iOS/Android)无效. ','<span style="color:#467B96;font-weight:bold">true</span>').'</td>
-</tr>
-<tr>
-<td class="param">repeat</td>
-<td class="value">false</td>
-<td>'._t('重复播放, 为%s时开启. ','<span style="color:#467B96;font-weight:bold">true</span>').'</td>
-</tr>
-<tr>
-<td class="param">mute</td>
-<td class="value">false</td>
-<td>'._t('静音, 为%s时开启. 对移动端(iOS/Android)无效. ','<span style="color:#467B96;font-weight:bold">true</span>').'</td>
-</tr>
-</tbody>
-</table>
-		';
+<div style="color:#999;font-size:13px;">
+'._t('编辑文章或页面写入%s文件地址%s即可显示影音播放器, ','<span style="color:#467B96;font-weight:bold;">&lt;jw&gt;</span><span style="color:#444;font-weight:bold;">','</span><span style="color:#467B96;font-weight:bold;">&lt;/jw&gt;</span>').'
+'._t('多个文件连播可用%s号隔开,','<span style="color:#467B96;font-weight:bold">,</span>').'<br/>
+'._t('参数间用%s号隔开, 支持%s等[更多详见]. 示例','<span style="color:#467B96;font-weight:bold;">|</span>','<span style="color:#444;font-weight:bold;">width</span>(宽度)<span style="color:#444;font-weight:bold;">height</span>(高度)<span style="color:#444;font-weight:bold;">image</span>(封面)<span style="color:#444;font-weight:bold;">title</span>(标题)').'</div>
+<div style="color:#444;font-size:13px;font-weight:bold;padding:5px 8px;width:223px;background:#E9E9E6;">
+<span style="color:#467B96;">&lt;jw&gt;</span>http://ckxt.mp4<span style="color:#467B96;">,</span>http://mv.flv<span style="color:#467B96;">|</span><br/>
+<span style="color:#467B96;">image=</span>http://图.jpg<span style="color:#467B96;">,</span>http://cover.png<span style="color:#467B96;">|</span><br/>
+<span style="color:#467B96;">title=</span>刺客信条<span style="color:#467B96;">,</span>Video Music Awards<span style="color:#467B96;">|</span><br/>
+<span style="color:#467B96;">autostart=</span>false<span style="color:#467B96;">|</span><br/>
+<span style="color:#467B96;">repeat</span>=true<span style="color:#467B96;">&lt;/jw&gt;</span>
+</div>
+';
 
 		$skin = new Typecho_Widget_Helper_Form_Element_Select('skin',
-		array(''=>_t('默认'),'six.xml'=>_t('艺术黑'),'five.xml'=>_t('商务白'),'beelden.xml'=>_t('古典红'),'bekle.xml'=>_t('运动蓝'),'glow.xml'=>_t('简约黑'),'roundster.xml'=>_t('时尚粉'),'stormtrooper.xml'=>_t('数码蓝'),'vapor.xml'=>_t('个性绿')),'',_t('皮肤风格选择'),_t('除默认外还可以选择8款Pro版官方定制皮肤'));
+		array(''=>_t('默认'),'six'=>_t('艺术黑'),'five'=>_t('商务白'),'beelden'=>_t('古典红'),'bekle'=>_t('运动蓝'),'glow'=>_t('简约黑'),'roundster'=>_t('时尚粉'),'stormtrooper'=>_t('数码蓝'),'vapor'=>_t('个性绿')),'',_t('皮肤风格选择'));
 		$form->addInput($skin);
 
-		$primary = new Typecho_Widget_Helper_Form_Element_Radio('primary',
-		array(''=>_t('HTML5'),'flash'=>_t('Flash')),'',_t('优先嵌载模式'),_t('仅在优先模式不被支持时则自动调用另一种'));
-		$form->addInput($primary);
-
 		$stretch = new Typecho_Widget_Helper_Form_Element_Select('stretch',
-		array('none'=>_t('固定'),''=>_t('缩放'),'fill'=>_t('裁切'),'exactfit'=>_t('拉伸')),'',_t('画面适应方法'),_t('视频尺寸与播放器尺寸不同时如何修正画面'));
+		array('none'=>_t('固定'),''=>_t('缩放'),'fill'=>_t('裁切'),'exactfit'=>_t('拉伸')),'',_t('画面适应方法'),_t('视频尺寸与播放器尺寸不同时的修正方式'));
 		$form->addInput($stretch);
 
-		$layout = new Typecho_Widget_Helper_Form_Element_Select('layout',
-			array('basic'=>_t('精简'),''=>_t('完整')),'',_t('播放列表效果'),_t('完整显示图片、标题和描述, 精简只显示标题'));
-		$form->addInput($layout);
+		$info = new Typecho_Widget_Helper_Form_Element_Radio('info',
+		array(1=>_t('是'),0=>_t('否')),0,_t('隐藏标题描述'),_t('是否在窗口显示title与description参数信息'));
+		$form->addInput($info);
 
-		$lsize = new Typecho_Widget_Helper_Form_Element_Text('lsize',NULL,'180',_t('高(底部)/宽(右侧): '));
-		$lsize->input->setAttribute('class','text-s');
-		$lsize->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:37px;left:62px;');
-		$lsize->input->setAttribute('style','position:absolute;width:50px;bottom:40px;left:179px;');
-		$lsize->setAttribute('style','list-style:none;position:relative;');
-		$form->addInput($lsize);
+		$about = new Typecho_Widget_Helper_Form_Element_Radio('about',
+		array(1=>_t('是'),0=>_t('否')),0,_t('提示原文链接'),_t('右击窗口时是否出现原文链接, 参数可覆盖'));
+		$form->addInput($about);
 
-		$tdefault = new Typecho_Widget_Helper_Form_Element_Select('tdefault',
-		array(''=>_t('手动'),'cn'=>_t('中文'),'en'=>_t('英文')),'',_t('默认显示字幕'),_t('tracks文件设置时可指定初始自动显示的字幕'));
-		$form->addInput($tdefault);
+		$tedge = new Typecho_Widget_Helper_Form_Element_Select('tedge',
+		array(''=>_t('默认'),'dropshadow'=>_t('下阴影'),'depressed'=>_t('上阴影'),'uniform'=>_t('深描边'),'raised'=>_t('浅描边')),'',_t('外挂字幕效果'));
+		$form->addInput($tedge);
 
 		$tsize = new Typecho_Widget_Helper_Form_Element_Text('tsize',NULL,'15',_t('字体大小: '));
 		$tsize->input->setAttribute('class','text-s');
-		$tsize->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:37px;left:62px;');
-		$tsize->input->setAttribute('style','position:absolute;width:50px;bottom:40px;left:127px;');
-		$tsize->setAttribute('style','list-style:none;position:relative;');
+		$tsize->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:10px;left:82px');
+		$tsize->input->setAttribute('style','position:absolute;width:47px;bottom:13px;left:145px');
+		$tsize->setAttribute('style','position:relative');
 		$form->addInput($tsize);
 
-		$topac = new Typecho_Widget_Helper_Form_Element_Text('topac',NULL,'75',_t('背景透明度: '));
-		$topac->input->setAttribute('class','text-s');
-		$topac->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:37px;left:184px;');
-		$topac->input->setAttribute('style','position:absolute;width:50px;bottom:40px;left:263px;');
-		$topac->setAttribute('style','list-style:none;position:relative;');
-		$form->addInput($topac);
+		$logo = new Typecho_Widget_Helper_Form_Element_Text('logo',
+		NULL,'',_t('logo水印图片'),_t('填写完整的图片url, 24位透明png效果最佳'));
+		$logo->input->setAttribute('class','w-60');
+		$form->addInput($logo->addRule('url',_t('请输入合法的图片地址')));
 
-		$title = new Typecho_Widget_Helper_Form_Element_Radio('title',
-		array(''=>_t('是'),'1'=>_t('否')),'',_t('按钮显示title'),_t('title文字设置时可在播放器中央的按钮上显示'));
-		$form->addInput($title);
+		$llink = new Typecho_Widget_Helper_Form_Element_Text('llink',
+		NULL,'',_t('logo链接地址'),_t('填写点击水印图片将跳转到的目标链接url'));
+		$llink->input->setAttribute('class','w-60');
+		$form->addInput($llink->addRule('url',_t('请输入合法的链接地址')));
 
-		$flback = new Typecho_Widget_Helper_Form_Element_Radio('flback',
-		array(''=>_t('是'),'1'=>_t('否')),'',_t('缺省显示下载'),_t('flash和html5模式均不支持时可显示下载链接'));
-		$form->addInput($flback);
+		$lpos = new Typecho_Widget_Helper_Form_Element_Select('lpos',
+		array(''=>_t('右上角'),'top-left'=>_t('左上角'),'bottom-right'=>_t('右下角'),'bottom-left'=>_t('左下角')),'',_t('logo显示位置'));
+		$form->addInput($lpos);
+
+		$margin = new Typecho_Widget_Helper_Form_Element_Text('margin',NULL,'8',_t('边距(margin值): '));
+		$margin->input->setAttribute('class','text-s');
+		$margin->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:10px;left:82px');
+		$margin->input->setAttribute('style','position:absolute;width:47px;bottom:13px;left:183px');
+		$margin->setAttribute('style','position:relative');
+		$form->addInput($margin);
+
+		$hide = new Typecho_Widget_Helper_Form_Element_Checkbox('hide',
+		array(1=>_t('自动隐藏')),NULL,'');
+		$hide->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:10px;left:244px');
+		$hide->input->setAttribute('style','position:absolute;width:35px;bottom:4px;left:49px');
+		$hide->setAttribute('style','position:relative');
+		$form->addInput($hide);
+
+		$share = new Typecho_Widget_Helper_Form_Element_Checkbox('share',
+		array('weibo'=>_t('微博'),'txwb'=>_t('腾讯微博'),'tieba'=>_t('贴吧'),'douban'=>_t('豆瓣'),'renren'=>_t('人人'),'facebook'=>_t('Facebook'),'twitter'=>_t('Twitter')),NULL,_t('分享功能按钮'));
+		$form->addInput($share);
 	}
+
 	/**
 	 * 个人用户的配置面板
 	 * 
@@ -209,35 +133,7 @@ text-align:center;
 	 * @param Typecho_Widget_Helper_Form $form
 	 * @return void
 	 */
-	public static function personalConfig(Typecho_Widget_Helper_Form $form) {}
-
-	/**
-	 * 头部js方法挂载
-	 * 
-	 * @return void
-	 */
-	public static function jwjs()
-	{
-		$url = Helper::options()->pluginUrl.'/JWPlayer/player/';
-		echo '<script type="text/javascript" src="'.$url.'jwplayer.js"></script>';
-	}
-
-	/**
-	 * MD兼容性过滤
-	 * 
-	 * @param array $value
-	 * @return array
-	 */
-	public static function jwfilter($value)
-	{
-		//避免自动链接
-		if ($value['isMarkdown']) {
-			$value['text'] = preg_replace('/(?!<div>)<(jw)>(.*?)<\/\\1>(?!<\/div>)/is','<div><jw>\\2</jw></div>',$value['text']);
-			//兼容AudioPlayer
-			$value['text'] = preg_replace('/(?!<div>)\[(mp3)](.*?)\[\/\\1](?!<\/div>)/is','<div>[mp3]\\2[/mp3]</div>',$value['text']);
-		}
-		return $value;
-	}
+	public static function personalConfig(Typecho_Widget_Helper_Form $form){}
 
 	/**
 	 * 内容标签替换
@@ -249,7 +145,7 @@ text-align:center;
 	{
 		$content = empty($lastResult) ? $content : $lastResult;
 
-		if ($widget instanceof Widget_Archive) {
+		if ($widget instanceof Widget_Archive && !$widget->request->feed && false!==stripos($content,'<jw>')) {
 			$content = preg_replace_callback('/<(jw)>(.*?)<\/\\1>/si',array('JWPlayer_Plugin','callback'),$content);
 		}
 
@@ -257,166 +153,245 @@ text-align:center;
 	}
 
 	/**
-	 * 参数回调解析
+	 * 摘要文本替换
 	 * 
-	 * @param array $matches
+	 * @param string $text
 	 * @return string
 	 */
-	public static function callback($matches)
+	public static function txtparse($text,$widget,$lastResult)
 	{
-		$atts = explode('|',$matches[2]);
+		$text = empty($lastResult) ? $text : $lastResult;
+
+		if ($widget instanceof Widget_Archive && false!==stripos($text,'<jw>')) {
+			$text = preg_replace('/<(jw)>(.*?)<\/\\1>/si',_t(' [影音片段: 请查看原文播放] '),$text);
+		}
+
+		return $text;
+	}
+
+	/**
+	 * 参数回调解析
+	 * 
+	 * @param array $matche
+	 * @return string
+	 */
+	public static function callback($matche)
+	{
 		$settings = Helper::options()->plugin('JWPlayer');
 		$data = array();
-		
-		//处理文件参数
+		$lists = array();
+
+		//过滤html标签
+		$atts = explode('|',trim(Typecho_Common::stripTags($matche['2'])));
 		$file = array_shift($atts);
-		if (strpos($file,'.rss')) {
+
+		//处理地址设置
+		if (preg_match("/(\.rss|\.json)/i",$file)) {
 			$data['playlist'] = $file;
 		} else {
 			$files = explode(',',$file);
-			for ($i=0;$i<count($files);$i++) {
-				//多画质
-				$qfiles = explode(';',$files[$i]);
-				for ($j=0;$j<count($qfiles);$j++) {
-					$quality[$j]['file'] = $qfiles[$j];
+			$fnum = count($files);
+			$qfiles = array();
+			$qnum = '';
+			$quality = array();
+
+			for ($i=0;$i<$fnum;++$i) {
+				if ($files[$i]) {
+					$qfiles = explode(';',$files[$i]);
+					$qnum = count($qfiles);
+
+					//准备画质数组
+					for ($j=0;$j<$qnum;++$j) {
+						$quality[$j]['file'] = $qfiles[$j];
+					}
 				}
-				//多文件
-				if (count($files)>1) {
-					if (count($qfiles)>1) {
+
+				//多文件参数
+				if ($fnum>1) {
+					if ($qnum>1) {
 						$lists[$i]['sources'] = $quality;
 					} else {
 						$lists[$i]['file'] = $files[$i];
 					}
-				//单文件
-				} else {
-					if (count($qfiles)>1) {
-						$data['sources'] = $quality;
-					} else {
-						$data['file'] = $file;
-					}
 				}
+			}
+
+			//单文件参数
+			if ($fnum<=1) {
+				if ($qnum>1) {
+					$data['sources'] = $quality;
+				} else {
+					$data['file'] = $file;
+				}
+			}
+
+			if (preg_match("/(\.m3u8|\.mpd|rtmp:\/\/)/i",$file)) {
+				$data['localization']['liveBroadcast'] = _t('在线直播');
 			}
 		}
 
-		//处理信息参数
-		$items = array('image','title','description');
-		foreach ($atts as $att) {
-			if (strpos($att,'=')) {
-				$pair = explode('=',$att);
-				$key = trim($pair[0]);
-				$val = trim($pair[1]);
-				if (in_array($key,$items)) {
-					$vals = explode(',',$val);
-					for ($i=0;$i<count($vals);$i++) {
-						//多文件
-						if (count($vals)>1) {
-							$lists[$i][$key] = $vals[$i];
-						//单文件
-						} else {
-							$data[$key] = $val;
-						}
-					}
-				//处理字幕参数
-				} elseif ($key == 'tracks') {
-					$vals = explode(',',$val);
-					for ($i=0;$i<count($vals);$i++) {
-						//多字幕
-						$tfiles = explode(';',$vals[$i]);
-						for ($j=0;$j<count($tfiles);$j++) {
-							$subs[$j]['file'] = $tfiles[$j];
-						}
-						//预设中英
-						$subs[0]['label'] = '中文';
-						if (!empty($subs[1]))
-						$subs[1]['label'] = 'English';
-						//默认显示
-						if ($settings->tdefault == 'cn') {
-							$subs[0]['default'] = 'true';
-						}
-						elseif ($settings->tdefault == 'en' && !empty($subs[1])) {
-							$subs[1]['default'] = 'true';
-						}
-						if ($vals[$i]) {
-							//多文件
-							if (count($vals)>1) {
-								$lists[$i]['tracks'] = $subs;
-							//单文件
-							} else {
-								$data['tracks'] = $subs;
+		if (array_filter($atts)) {
+			$pair = array();
+			$key = '';
+			$val = '';
+			$vals = array();
+			$vnum = '';
+			$tfiles = array();
+			$subs = array();
+
+			foreach ($atts as $att) {
+				if (strpos($att,'=')) {
+					$pair = explode('=',$att);
+					$key = trim($pair['0']);
+					$val = trim($pair['1']);
+
+					//处理列表设置
+					if (in_array($key,array('image','title','description','tracks')) && $val) {
+						$vals = explode(',',$val);
+						$vnum = count($vals);
+
+						for ($i=0;$i<$vnum;++$i) {
+							if ($key=='tracks' && $vals[$i]) {
+								$tfiles = explode(';',$vals[$i]);
+
+								//准备语种数组
+								for ($j=0;$j<count($tfiles);++$j) {
+									$subs[$j]['file'] = $tfiles[$j];
+								}
+
+								//多文件参数
+								if ($vnum>1) {
+									$lists[$i]['tracks'] = $subs;
+								}
+							} elseif ($vnum>1) {
+								$lists[$i][$key] = $vals[$i];
 							}
 						}
+
+						if ($key=='tracks') {
+							//预设中英字幕
+							$subs['0']['label'] = '中文';
+							if (isset($subs['1'])) {
+								$subs['1']['label'] = 'English';
+							}
+
+							//字幕插件设置
+							if ($settings->tsize!=='15') {
+								$data['captions']['fontSize'] = $settings->tsize;
+							}
+							if ($settings->tedge) {
+								$data['captions']['backgroundOpacity'] = '0';
+								$data['captions']['edgeStyle'] = $settings->tedge;
+							}
+
+							//单文件参数
+							if ($vnum<=1) {
+								$data['tracks'] = $subs;
+							}
+						} elseif ($vnum<=1) {
+							$data[$key] = $val;
+						}
+
+					//处理其他设置
+					} else {
+						$data[$key] = $val;
 					}
-				//处理列表参数
-				} elseif ($key == 'listbar') {
-					$data['listbar']['position'] = $val;
-				} elseif ($key == 'listsize') {
-					$data['listbar']['size'] = $val;
-				} else {
-					$data[$key] = $val;
 				}
 			}
 		}
-		if (!empty($lists))
-			$data['playlist'] = $lists;
 
-		return self::output($data);
+		if ($lists) {
+			$data['playlist'] = $lists;
+			$data['localization']['playlist'] = _t('播放列表');
+			$data['localization']['nextUp'] = _t('接下来是');
+		}
+
+		return self::output($data,true);
 	}
 
 	/**
 	 * 输出播放器实例
 	 * 
-	 * @param string $source
-	 * @param array $options
+	 * @param array $jwsets 参数设置
+	 * @param boolean $iscall 是否回调
+	 * @return void
+	 */
+	public static function output($jwsets=array(),$iscall=false)
+	{
+		$url = Helper::options()->pluginUrl.'/JWPlayer/player/';
+		$jwsets = Json::encode(array_merge($jwsets,self::getsets()));
+		$ids = "jwplayer_".++self::$id;
+
+		//播放器实例代码
+		$output = '<script type="text/javascript">//<![CDATA[
+	window.jwplayer || document.write("<script type=\"text/javascript\" src=\"'.$url.'jwplayer.js\"><\/script>")//]]></script>';
+		$output .= '<script type="text/javascript">jwplayer.defaults = {"base":"'.$url.'"};</script>';
+		$output .= '<div id="'.$ids.'">'._t('播放器载入中...').'</div>';
+		$output .= '<script type="text/javascript">jwplayer("'.$ids.'").setup('.$jwsets.');</script>';
+
+		//模版输出判断
+		if ($iscall) {
+			return $output;
+		} else {
+			echo $output;
+		}
+	}
+
+	/**
+	 * 输出插件设置
+	 * 
 	 * @return string
 	 */
-	public static function output($jwsets = array())
+	public static function getsets()
 	{
-		$options = Helper::options();
-		$skinurl = $options->pluginUrl.'/JWPlayer/player/skins/';
-		$settings = $options->plugin('JWPlayer');
+		$settings = Helper::options()->plugin('JWPlayer');
+		$share = $settings->share;
+		$archive = Typecho_Widget::widget('Widget_Archive');
+		$url = $archive->permalink;
+		$sets = array();
 
-		//插件设置
 		if ($settings->skin) {
-			$jwsets['skin'] = $skinurl.$settings->skin;
-		}
-		if ($settings->primary) {
-			$jwsets['primary'] = 'flash';
+			$skin = $settings->skin;
+			$sets['skin'] = array('name'=>$skin);
 		}
 		if ($settings->stretch) {
-			$jwsets['stretching'] = $settings->stretch;
+			$sets['stretching'] = $settings->stretch;
 		}
-		if (!empty($jwsets['listbar']['position'])) {
-			if ($settings->layout&&empty($jwsets['listbar']['layout'])) {
-				$jwsets['listbar']['layout'] = $settings->layout;
+		if ($settings->info) {
+			$sets['displaytitle'] = 'false';
+			$sets['displaydescription'] = 'false';
+		}
+		if ($settings->about) {
+			$sets['abouttext'] = _t('原文链接: ').$archive->title;
+			$sets['aboutlink'] = $url;
+		}
+		if ($share) {
+			$sets['sharing']['heading'] = _t('分享到');
+			$sets['sharing']['link'] = $url;
+			$sets['sharing']['sites'] = array_merge(array('email'),$share);
+		}
+
+		$logo = $settings->logo;
+		$llink = $settings->llink;
+		$lops = $settings->lpos;
+		$margin = $settings->margin;
+		if ($logo) {
+			$sets['logo']['file'] = $logo;
+			if ($llink) {
+				$sets['logo']['link'] = $llink;
 			}
-			if ($settings->lsize !== '180'&&empty($jwsets['listbar']['size'])) {
-				$jwsets['listbar']['size'] = $settings->lsize;
+			if ($lops) {
+				$sets['logo']['position'] = $lops;
+			}
+			if ($margin!=='8') {
+				$sets['logo']['margin'] = $margin;
+			}
+			if ($settings->hide) {
+				$sets['logo']['hide'] = true;
 			}
 		}
-		if ($settings->tsize !== '15') {
-				$jwsets['captions']['fontSize'] = $settings->tsize;
-		}
-		if ($settings->topac !== '75') {
-			$jwsets['captions']['backgroundOpacity'] = $settings->topac;
-		}
-		if ($settings->title) {
-			$jwsets['displaytitle'] = 'false';
-		}
-		if ($settings->flback) {
-			$jwsets['fallback'] = 'false';
-		}
 
-		//格式化参数
-		$encode = class_exists('Json') ? Json::encode($jwsets) : json_encode($jwsets);
-
-		//输出实例
-		$ids = "jwplayer_".++self::$id;
-		$output = '<div id="'.$ids.'">'._t('播放器载入中...').'</div>';
-		$output .= '<script type="text/javascript">';
-		$output .= 'jwplayer("'.$ids.'").setup('.$encode.');';
-		$output .= '</script>';
-
-		return $output;
+		return $sets;
 	}
 
 }
