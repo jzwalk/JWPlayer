@@ -5,8 +5,8 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  * 
  * @package JWPlayer
  * @author 羽中
- * @version 1.0.6
- * @dependence 14.10.10
+ * @version 1.0.7
+ * @dependence 14.10.10-*
  * @link http://www.yzmb.me/archives/net/jwplayer-for-typecho
  */
 class JWPlayer_Plugin implements Typecho_Plugin_Interface
@@ -52,11 +52,12 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 	 */
 	public static function config(Typecho_Widget_Helper_Form $form)
 	{
+		//输出面板效果
 		echo '
 <div style="color:#999;font-size:13px;">
 '._t('编辑文章或页面写入%s文件地址%s即可显示影音播放器, ','<span style="color:#467B96;font-weight:bold;">&lt;jw&gt;</span><span style="color:#444;font-weight:bold;">','</span><span style="color:#467B96;font-weight:bold;">&lt;/jw&gt;</span>').'
 '._t('多个文件连播可用%s号隔开,','<span style="color:#467B96;font-weight:bold">,</span>').'<br/>
-'._t('参数间用%s号隔开, 支持%s等[更多详见]. 示例','<span style="color:#467B96;font-weight:bold;">|</span>','<span style="color:#444;font-weight:bold;">width</span>(宽度)<span style="color:#444;font-weight:bold;">height</span>(高度)<span style="color:#444;font-weight:bold;">image</span>(封面)<span style="color:#444;font-weight:bold;">title</span>(标题)').'</div>
+'._t('参数间用%s号隔开, 支持%s等<a class="tog" href="###" title="点击显隐">[参数列表]</a>. 示例','<span style="color:#467B96;font-weight:bold;">|</span>','<span style="color:#444;font-weight:bold;">width</span>(宽度)<span style="color:#444;font-weight:bold;">height</span>(高度)<span style="color:#444;font-weight:bold;">image</span>(封面)<span style="color:#444;font-weight:bold;">title</span>(标题)').'</div>
 <div style="color:#444;font-size:13px;font-weight:bold;padding:5px 8px;width:223px;background:#E9E9E6;">
 <span style="color:#467B96;">&lt;jw&gt;</span>http://ckxt.mp4<span style="color:#467B96;">,</span>http://mv.flv<span style="color:#467B96;">|</span><br/>
 <span style="color:#467B96;">image=</span>http://图.jpg<span style="color:#467B96;">,</span>http://cover.png<span style="color:#467B96;">|</span><br/>
@@ -64,6 +65,142 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 <span style="color:#467B96;">autostart=</span>false<span style="color:#467B96;">|</span><br/>
 <span style="color:#467B96;">repeat</span>=true<span style="color:#467B96;">&lt;/jw&gt;</span>
 </div>
+<style type="text/css">
+table {
+background:#FFF;
+color:#666;
+width:430px;
+font-size:13px;
+border:2px solid #e3e3e3;
+float:right;
+right:247px;
+bottom:109px;
+position:relative;
+display:none;
+z-index:10;
+}
+table td{
+border-top:1px solid #e3e3e3;
+padding:3px;
+}
+.param {
+color:#444;
+font-weight:bold;
+text-align:center;
+}
+.value {
+color:#467B96;
+font-weight:bold;
+text-align:center;
+}
+</style>
+<table>
+<colgroup>
+<col width="20%"/>
+<col width="10%"/>
+<col width="70%"/>
+</colgroup>
+<thead>
+<tr>
+<th>'._t('参数').'</th>
+<th>'._t('默认').'</th>
+<th>'._t('说明').'</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="param">image</td>
+<td class="value">-</td>
+<td>'._t('封面图片url，播放音频时全程显示。').'</td>
+</tr>
+<tr>
+<td class="param">title</td>
+<td class="value">-</td>
+<td>'._t('标题文字，封面窗口和列表项显示。').'</td>
+</tr>
+<tr>
+<td class="param">description</td>
+<td class="value">-</td>
+<td>'._t('描述文字，封面窗口显示。').'</td>
+</tr>
+<tr>
+<td class="param">tracks</td>
+<td class="value">-</td>
+<td>'._t('字幕文件url，支持WebVTT/SRT/DFXP格式。').'</td>
+</tr>
+<tr>
+<td class="param">width</td>
+<td class="value">480</td>
+<td>'._t('宽度像素值(整数)或百分数。').'</td>
+</tr>
+<tr>
+<td class="param">height</td>
+<td class="value">270</td>
+<td>'._t('高度像素值(整数)，40为音频模式高度。').'</td>
+</tr>
+<tr>
+<td class="param">aspectratio</td>
+<td class="value">-</td>
+<td>'._t('宽高比如%s，与百分数width锁定画面比例。','<span class="value">16:9</span>').'</td>
+</tr>
+<tr>
+<td class="param">autostart</td>
+<td class="value">false</td>
+<td>'._t('自动播放，为%s时开启。','<span class="value">true</span>').'</td>
+</tr>
+<tr>
+<td class="param">repeat</td>
+<td class="value">false</td>
+<td>'._t('循环播放，为%s时开启。','<span class="value">true</span>').'</td>
+</tr>
+<tr>
+<td class="param">mute</td>
+<td class="value">false</td>
+<td>'._t('静音，为%s时开启。','<span class="value">true</span>').'</td>
+</tr>
+<tr>
+<td class="param">primary</td>
+<td class="value">html5</td>
+<td>'._t('优先模式%s或%s，缺省自动互补切换。','<span class="value">flash</span>','<span class="value">html5</span>').'</td>
+</tr>
+<tr>
+<tr>
+<td class="param">preload</td>
+<td class="value">-</td>
+<td>'._t('预加载，%s禁用/%s信息/%s视频。','<span class="value">none</span>','<span class="value">metadata</span>','<span class="value">auto</span>').'</td>
+</tr>
+<tr>
+<td class="param">abouttext</td>
+<td class="value">-</td>
+<td>'._t('右击菜单文字，覆盖提示原文链接设置。').'</td>
+</tr>
+<tr>
+<td class="param">aboutlink</td>
+<td class="value">-</td>
+<td>'._t('右击菜单链接，同上。').'</td>
+</tr>
+<tr>
+<td class="param">timeSliderAbove</td>
+<td class="value">false</td>
+<td>'._t('分离进度条，%s以兼容移动端小窗口情况。','<span class="value">true</span>').'</td>
+</tr>
+<tr>
+<td class="param">stereomode</td>
+<td class="value">-</td>
+<td>'._t('VR全景模式解析，唯一值%s即360度自由旋转，多个视频可重复该值用<strong>,</strong>号分隔。','<span class="value">monoscopic</span>').'</td>
+</tr>
+</tbody>
+</table>
+<script src="'.Helper::options()->adminUrl().'js/jquery.js"></script>
+<script>
+$(function() {
+	var tab = $("table");
+	$(".tog").click(function() {
+		tab.css("opacity","0.9").toggle();
+		return false;
+	});
+});
+</script>
 ';
 
 		$skin = new Typecho_Widget_Helper_Form_Element_Select('skin',
@@ -89,7 +226,7 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 		$tsize = new Typecho_Widget_Helper_Form_Element_Text('tsize',NULL,'15',_t('字体大小: '));
 		$tsize->input->setAttribute('class','text-s');
 		$tsize->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:10px;left:82px');
-		$tsize->input->setAttribute('style','position:absolute;width:47px;bottom:13px;left:145px');
+		$tsize->input->setAttribute('style','position:absolute;width:38px;bottom:13px;left:145px');
 		$tsize->setAttribute('style','position:relative');
 		$form->addInput($tsize);
 
@@ -110,7 +247,7 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 		$margin = new Typecho_Widget_Helper_Form_Element_Text('margin',NULL,'8',_t('边距(margin值): '));
 		$margin->input->setAttribute('class','text-s');
 		$margin->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:10px;left:82px');
-		$margin->input->setAttribute('style','position:absolute;width:47px;bottom:13px;left:183px');
+		$margin->input->setAttribute('style','position:absolute;width:38px;bottom:13px;left:183px');
 		$margin->setAttribute('style','position:relative');
 		$form->addInput($margin);
 
@@ -182,7 +319,8 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 		$lists = array();
 
 		//过滤html标签
-		$atts = explode('|',trim(Typecho_Common::stripTags($matche['2'])));
+		$codes = trim(Typecho_Common::stripTags($matche['2']));
+		$atts = explode('|',$codes);
 		$file = array_shift($atts);
 
 		//处理地址设置
@@ -194,6 +332,8 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 			$qfiles = array();
 			$qnum = '';
 			$quality = array();
+			//判断VR模式
+			$vr = strpos($codes,'stereomode');
 
 			for ($i=0;$i<$fnum;++$i) {
 				if ($files[$i]) {
@@ -207,7 +347,7 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 				}
 
 				//多文件参数
-				if ($fnum>1) {
+				if ($fnum>1 || $vr) {
 					if ($qnum>1) {
 						$lists[$i]['sources'] = $quality;
 					} else {
@@ -244,38 +384,47 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 					$pair = explode('=',$att);
 					$key = trim($pair['0']);
 					$val = trim($pair['1']);
+					//处理通用设置
+					$data[$key] = $val;
 
 					//处理列表设置
-					if (in_array($key,array('image','title','description','tracks')) && $val) {
+					if (in_array($key,array('image','title','description','tracks','stereomode')) && $val) {
 						$vals = explode(',',$val);
 						$vnum = count($vals);
 
 						for ($i=0;$i<$vnum;++$i) {
 							if ($key=='tracks' && $vals[$i]) {
 								$tfiles = explode(';',$vals[$i]);
+								$tnum = count($tfiles);
 
 								//准备语种数组
-								for ($j=0;$j<count($tfiles);++$j) {
+								for ($j=0;$j<$tnum;++$j) {
 									$subs[$j]['file'] = $tfiles[$j];
+									//fix seperator bug
+									if ($tnum<=1) {
+										array_splice($subs,1);
+									}
+
+									//预设中英字幕
+									$subs['0']['label'] = '中文';
+									if (isset($subs['1'])) {
+										$subs['1']['label'] = 'English';
+									}
 								}
 
 								//多文件参数
 								if ($vnum>1) {
+									unset($data['tracks']);
 									$lists[$i]['tracks'] = $subs;
 								}
-							} elseif ($vnum>1) {
+							} elseif ($vnum>1 || $vr) {
+								unset($data[$key]);
 								$lists[$i][$key] = $vals[$i];
 							}
 						}
 
 						if ($key=='tracks') {
-							//预设中英字幕
-							$subs['0']['label'] = '中文';
-							if (isset($subs['1'])) {
-								$subs['1']['label'] = 'English';
-							}
-
-							//字幕插件设置
+							//字幕效果选项
 							if ($settings->tsize!=='15') {
 								$data['captions']['fontSize'] = $settings->tsize;
 							}
@@ -288,13 +437,7 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 							if ($vnum<=1) {
 								$data['tracks'] = $subs;
 							}
-						} elseif ($vnum<=1) {
-							$data[$key] = $val;
 						}
-
-					//处理其他设置
-					} else {
-						$data[$key] = $val;
 					}
 				}
 			}
@@ -325,9 +468,8 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 		//播放器实例代码
 		$output = '<script type="text/javascript">//<![CDATA[
 	window.jwplayer || document.write("<script type=\"text/javascript\" src=\"'.$url.'jwplayer.js\"><\/script>")//]]></script>';
-		$output .= '<script type="text/javascript">jwplayer.defaults = {"base":"'.$url.'"};</script>';
 		$output .= '<div id="'.$ids.'">'._t('播放器载入中...').'</div>';
-		$output .= '<script type="text/javascript">jwplayer("'.$ids.'").setup('.$jwsets.');</script>';
+		$output .= '<script type="text/javascript">jwplayer.defaults = {"base":"'.$url.'"};jwplayer("'.$ids.'").setup('.$jwsets.');</script>';
 
 		//模版输出判断
 		if ($iscall) {
