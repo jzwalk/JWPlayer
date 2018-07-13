@@ -5,7 +5,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  * 
  * @package JWPlayer
  * @author 羽中
- * @version 1.0.8
+ * @version 1.0.9
  * @dependence 14.5.26-*
  * @link http://www.yzmb.me/archives/net/jwplayer-for-typecho
  */
@@ -199,6 +199,11 @@ class JWPlayer_Plugin implements Typecho_Plugin_Interface
 <td>'._t('右击菜单链接，同上。').'</td>
 </tr>
 <tr>
+<td class="param">stretching</td>
+<td class="value">uniform</td>
+<td>'._t('画面适应方法，可覆盖插件统一设置，对应值%s固定/%s缩放/%s裁切/%s拉伸。','<span class="value">none</span>','<span class="value">uniform</span>','<span class="value">fill</span>','<span class="value">exactfit</span>').'</td>
+</tr>
+<tr>
 <td class="param">minDvrWindow</td>
 <td class="value">120</td>
 <td>'._t('(直播流)回放模式判定，默认检测到120个缓存单元开启，设置为0可强制显示录像控制按钮。','<span class="value">monoscopic</span>','<strong>,</strong>').'</td>
@@ -278,6 +283,10 @@ $(function(){
 		array('none'=>_t('固定'),''=>_t('缩放'),'fill'=>_t('裁切'),'exactfit'=>_t('拉伸')),'',_t('画面适应方法'),_t('视频尺寸与播放器尺寸不同时的修正方式'));
 		$form->addInput($stretch);
 
+		$encode = new Typecho_Widget_Helper_Form_Element_Radio('encode',
+		array(1=>_t('是'),0=>_t('否')),0,_t('加密视频地址'),_t('是否隐藏文件url使其在源码中显示为乱码'));
+		$form->addInput($encode);
+
 		$info = new Typecho_Widget_Helper_Form_Element_Radio('info',
 		array(1=>_t('是'),0=>_t('否')),0,_t('隐藏标题描述'),_t('是否在窗口显示title与description参数信息'));
 		$form->addInput($info);
@@ -290,10 +299,10 @@ $(function(){
 		array(''=>_t('默认'),'dropshadow'=>_t('下阴影'),'depressed'=>_t('上阴影'),'uniform'=>_t('深描边'),'raised'=>_t('浅描边')),'',_t('外挂字幕效果'));
 		$form->addInput($tedge);
 
-		$tsize = new Typecho_Widget_Helper_Form_Element_Text('tsize',NULL,'15',_t('字体大小: '));
+		$tsize = new Typecho_Widget_Helper_Form_Element_Text('tsize',NULL,'15',_t('字体大小(单位px, 不用填写): '));
 		$tsize->input->setAttribute('class','text-s');
 		$tsize->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:10px;left:82px;');
-		$tsize->input->setAttribute('style','position:absolute;width:38px;bottom:13px;left:145px;');
+		$tsize->input->setAttribute('style','position:absolute;width:38px;bottom:13px;left:258px;');
 		$tsize->setAttribute('style','position:relative');
 		$form->addInput($tsize->addRule('isFloat'));
 
@@ -311,16 +320,16 @@ $(function(){
 		array(''=>_t('右上角'),'top-left'=>_t('左上角'),'bottom-right'=>_t('右下角'),'bottom-left'=>_t('左下角'),'control-bar'=>_t('控制条')),'',_t('logo显示位置'));
 		$form->addInput($lpos);
 
-		$margin = new Typecho_Widget_Helper_Form_Element_Text('margin',NULL,'8',_t('边距(margin值): '));
+		$margin = new Typecho_Widget_Helper_Form_Element_Text('margin',NULL,'8',_t('边距(单位px, 不用填写): '));
 		$margin->input->setAttribute('class','text-s');
 		$margin->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:10px;left:82px;');
-		$margin->input->setAttribute('style','position:absolute;width:38px;bottom:13px;left:183px;');
+		$margin->input->setAttribute('style','position:absolute;width:38px;bottom:13px;left:230px;');
 		$margin->setAttribute('style','position:relative');
 		$form->addInput($margin->addRule('isFloat'));
 
 		$hide = new Typecho_Widget_Helper_Form_Element_Checkbox('hide',
 		array(1=>_t('自动隐藏')),NULL,'');
-		$hide->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:10px;left:232px;');
+		$hide->label->setAttribute('style','position:absolute;color:#999;font-weight:normal;bottom:10px;left:279px;');
 		$hide->input->setAttribute('style','position:absolute;bottom:4px;left:60px;');
 		$hide->setAttribute('style','position:relative');
 		$form->addInput($hide);
@@ -404,140 +413,162 @@ $(function(){
 		$codes = trim(Typecho_Common::stripTags($match['2']));
 		if (strpos($codes,'&lt')) $codes = substr($codes,0,-3); //markdown fix
 		$atts = strpos($codes,'|') ? explode('|',$codes) : array($codes);
-		$file = trim(array_shift($atts));
 
-		//处理地址参数
-		if (preg_match("/(\.rss|\.json)/i",$file)) {
-			$data['playlist'] = $file;
-		} else {
-			$files = explode(',',$file);
-			$fnum = count($files);
-			$qfiles = array();
-			$qnum = '';
-			$quality = array();
-			$vr = strpos($codes,'stereomode');
-			$dvr = strpos($codes,'minDvrWindow');
+		$file =  trim(array_shift($atts));
+		$files = explode(',',$file);
+		$fnum = count($files);
+		$qfiles = array();
+		$qnum = '';
+		$source = '';
+		$quality = array();
+		$vr = strpos($codes,'stereomode');
+		$dvr = strpos($codes,'minDvrWindow');
+		//处理视频参数
+		for ($i=0;$i<$fnum;++$i) {
+			//处理画质参数
+			if ($files[$i]) {
+				$qfiles = explode(';',$files[$i]);
+				$qnum = count($qfiles);
 
-			for ($i=0;$i<$fnum;++$i) {
-				if ($files[$i]) {
-					$qfiles = explode(';',$files[$i]);
-					$qnum = count($qfiles);
-
-					//准备画质数组
-					for ($j=0;$j<$qnum;++$j) {
-						$quality[$j]['file'] = trim($qfiles[$j]);
-					}
-
-					//预设3种清晰度
-					$quality['0']['label'] = _t('标清');
-					if (isset($quality['1'])) {
-						$quality['1']['label'] = _t('高清');
-					}
-					if (isset($quality['2'])) {
-						$quality['2']['label'] = _t('超清');
-					}
-				}
-
-				//多文件参数
-				if ($fnum>1 || $vr || $dvr) {
-					if ($qnum>1) {
-						$lists[$i]['sources'] = $quality;
+				//准备画质数组
+				for ($j=0;$j<$qnum;++$j) {
+					$source = trim($qfiles[$j]);
+					if (false!==strpos($source,'^')) {
+						$metas = explode('^',$source);
+						$quality[$j]['label'] = $metas['0'];
+						$quality[$j]['file'] = self::encode($metas['1']);
+						if (isset($metas['2'])) {
+							$quality[$j]['type'] = $metas['2'];
+						}
 					} else {
-						$lists[$i]['file'] = trim($files[$i]);
+						$quality[$j]['file'] = self::encode($source);
+						//预设3种清晰度
+						$quality['0']['label'] = _t('标清');
+						if (isset($quality['1'])) {
+							$quality['1']['label'] = _t('高清');
+						}
+						if (isset($quality['2'])) {
+							$quality['2']['label'] = _t('超清');
+						}
 					}
 				}
 			}
 
-			//单文件参数
-			if ($fnum<=1) {
+			//多文件画质参数
+			if ($fnum>1 || $vr || $dvr) {
 				if ($qnum>1) {
-					$data['sources'] = $quality;
+					$lists[$i]['sources'] = $quality;
 				} else {
-					$data['file'] = $file;
+					$lists[$i]['file'] = self::encode(trim($files[$i]));
 				}
 			}
 		}
+		//单文件画质参数
+		if ($fnum<=1) {
+			if ($qnum>1) {
+				$data['sources'] = $quality;
+			} else {
+				$data['file'] = self::encode($file);
+			}
+		}
 
+		$pair = array();
+		$key = '';
+		$val = '';
+		$listkey = false;
+		$vals = array();
+		$keyvals = '';
+		$tfiles = array();
+		$tnum = '';
+		$track = '';
+		$subs = array();
 		//处理其他参数
-		if (array_filter($atts)) {
-			$pair = array();
-			$key = '';
-			$val = '';
-			$vals = array();
-			$vnum = '';
-			$tfiles = array();
-			$subs = array();
+		foreach ($atts as $att) {
+			$pair = explode('=',$att);
+			$key = trim($pair['0']);
+			$val = isset($pair['1']) ? trim($pair['1']) : '';
+			$data[$key] = $val;
 
-			foreach ($atts as $att) {
-				if (strpos($att,'=')) {
-					$pair = explode('=',$att);
-					$key = trim($pair['0']);
-					$val = trim($pair['1']);
-					$data[$key] = $val;
+			$listkey = in_array($key,array('image','title','description','tracks','stereomode','minDvrWindow'));
+			if ($listkey) {
+				$vals[$key] = explode(',',$data[$key]);
+			}
 
-					//处理列表参数
-					if (in_array($key,array('image','title','description','tracks','stereomode','minDvrWindow')) && false!==$val) {
-						$vals = explode(',',$val);
-						$vnum = count($vals);
+			//处理列表参数
+			for ($i=0;$i<$fnum;++$i) {
+				if (isset($vals[$key][$i])) {
+					$keyvals = trim($vals[$key][$i]);
+					//处理字幕参数
+					if ($key=='tracks' && $keyvals) {
+						$tfiles = explode(';',$keyvals);
+						$tnum = count($tfiles);
 
-						for ($i=0;$i<$vnum;++$i) {
-							if (isset($vals[$i])) {
-								if ($key=='tracks') {
-									$tfiles = explode(';',$vals[$i]);
-									$tnum = count($tfiles);
-
-									//准备语种数组
-									for ($j=0;$j<$tnum;++$j) {
-										$subs[$j]['file'] = trim($tfiles[$j]);
-										if ($tnum<=1) {
-											array_splice($subs,1);
-										}
-
-										//预设中英字幕
-										$subs['0']['label'] = _t('中文');
-										if (isset($subs['1'])) {
-											$subs['1']['label'] = _t('英文');
-										}
-									}
-
-									//多文件参数
-									if ($vnum>1) {
-										unset($data['tracks']);
-										$lists[$i]['tracks'] = $subs;
-									}
-								} elseif ($vnum>1 || $vr || $dvr) {
-									unset($data[$key]);
-									$lists[$i][$key] = $vals[$i];
+						//准备语种数组
+						for ($j=0;$j<$tnum;++$j) {
+							$track = trim($tfiles[$j]);
+							if (false!==strpos($track,'^')) {
+								$infos = explode('^',$track);
+								$subs[$j]['label'] = $infos['0'];
+								$subs[$j]['file'] = $infos['1'];
+								if (isset($infos['2'])) {
+									$subs[$j]['kind'] = $infos['2'];
+								}
+							} else {
+								$subs[$j]['file'] = $track;
+								//预设中英字幕
+								$subs['0']['label'] = _t('中文');
+								if (isset($subs['1'])) {
+									$subs['1']['label'] = _t('英文');
 								}
 							}
 						}
-
-						if ($key=='tracks') {
-							$tsize = $settings->tsize;
-							//字幕效果选项
-							if ($tsize && $tsize!=='15') {
-								$data['captions']['fontSize'] = $tsize;
-							}
-							if ($settings->tedge) {
-								$data['captions']['backgroundOpacity'] = '0';
-								$data['captions']['edgeStyle'] = $settings->tedge;
-							}
-
-							//单文件参数
-							if ($vnum<=1) {
-								$data['tracks'] = $subs;
-							}
+						if ($tnum<=1) {
+							array_splice($subs,1);
 						}
+
+						//多文件字幕参数
+						if ($fnum>1) {
+							unset($data['tracks']);
+							$lists[$i]['tracks'] = $subs;
+						}
+
+					//多文件其他参数
+					} elseif ($fnum>1 || $vr || $dvr) {
+						unset($data[$key]);
+						$lists[$i][$key] = $keyvals;
 					}
+
+				//对应自动置空
+				} elseif ($listkey) {
+					$lists[$i][$key] = '';
+				}
+			}
+
+			//单文件字幕参数
+			if ($key=='tracks') {
+				if ($fnum<=1) {
+					$data['tracks'] = $subs;
+				}
+				//字幕效果选项
+				$tsize = $settings->tsize;
+				if ($tsize && $tsize!=='15') {
+					$data['captions']['fontSize'] = $tsize;
+				}
+				if ($settings->tedge) {
+					$data['captions']['backgroundOpacity'] = '0';
+					$data['captions']['edgeStyle'] = $settings->tedge;
 				}
 			}
 		}
 
-		if ($lists) {
+		if (preg_match("/(\.rss|\.json)/i",$file)) {
+			unset($data['file']);
+			$data['playlist'] = self::encode($file);
+		} elseif ($lists) {
 			$data['playlist'] = $lists;
 		}
 
-		return self::output(Typecho_Widget::widget('Widget_Archive'),array($data+self::locals(),true));
+		return self::output('',array($data,true));
 	}
 
 	/**
@@ -549,7 +580,8 @@ $(function(){
 	 */
 	public static function output($widget,array $params)
 	{
-		$url = Helper::options()->pluginUrl.'/JWPlayer/player/';
+		$options = Helper::options();
+		$url = $options->pluginUrl.'/JWPlayer/player/';
 		$ids = "jwplayer_".++self::$id;
 
 		//处理实例参数
@@ -563,7 +595,7 @@ $(function(){
 		$output = '<script type="text/javascript">
 window.jwplayer || document.write(\'<script type="text/javascript" src="'.$url.'jwplayer.js"><\/script>\')</script>'; //不重复加载
 		$output .= '<div id="'.$ids.'">'._t('播放器载入中...').'</div>';
-		$output .= '<script type="text/javascript">jwplayer.defaults = {"base":"'.$url.'"};jwplayer("'.$ids.'").setup('.$jwsets.');</script>';
+		$output .= '<script type="text/javascript">jwplayer.defaults = {"base":"'.$url.'"};'.($options->plugin('JWPlayer')->encode ? 'jwplayer.encode = true;' : '').'jwplayer("'.$ids.'").setup('.$jwsets.');</script>';
 
 		//模版输出判断
 		if ($iscall) {
@@ -641,7 +673,34 @@ window.jwplayer || document.write(\'<script type="text/javascript" src="'.$url.'
 			}
 		}
 
-		return $sets;
+		return $sets+self::locals();
+	}
+
+	/**
+	 * 加密视频地址
+	 * 
+	 * @param string $string
+	 * @return string
+	 */
+	private static function encode($string)
+	{
+		 if (Helper::options()->plugin('JWPlayer')->encode) {
+			$string = rawurlencode($string);
+
+			$ntexto = '';
+			$codekey = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-';
+			for ($i=0;$i<strlen($string);$i++) {
+				$ntexto .= substr('0000'.base_convert(ord($string{$i}),10,2),-8);
+			}
+			$ntexto .= substr('00000',0,6-strlen($ntexto)%6);
+
+			$string = '';
+			for ($i=0;$i<strlen($ntexto)-1;$i=$i+6) {
+				$string .= $codekey{intval(substr($ntexto,$i,6),2)};
+			}
+ 		}
+
+		return $string;
 	}
 
 	/**

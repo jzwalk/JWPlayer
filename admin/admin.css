@@ -27,14 +27,19 @@
 table {
 	background: #FFF;
 	color: #666;
-	width: 445px;
+	width: 452px;
 	font-size: .92857em;
 	border: 2px solid #e3e3e3;
-	right: 247px;
+	right: 239px;
 	top: -109px;
 	display: none;
 	position: absolute;
 	z-index: 10;
+}
+@media screen and (max-width: 500px) {
+	table {
+		left: 0px;
+	}
 }
 table td {
 	border-top: 1px solid #e3e3e3;
